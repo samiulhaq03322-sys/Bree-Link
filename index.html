@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bree-Link | Premier Okanagan Plumbing & Heating</title>
+    <meta name="description" content="Professional Plumbing & Heating services in Kelowna, Lake Country, and Vernon. 24/7 Emergency support.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            /* Flame Inner Gradient */
+            --orange-dark: #F36C21;
+            --orange-light: #FDBA3B;
+            --flame-grad: linear-gradient(to bottom, #F36C21, #FDBA3B);
+            
+            /* Outer Flame Gradient */
+            --blue-dark: #0E5AA7;
+            --blue-light: #2CA7DF;
+            --ocean-grad: linear-gradient(135deg, #0E5AA7, #2CA7DF);
+            
+            --dark-bg: #0b0f19;
+            --card-bg: #161c2d;
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--blue-dark); border-radius: 5px; }
+
+        /* --- Global Animations --- */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-up.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Emergency Bar --- */
+        .emergency-bar {
+            background: var(--flame-grad);
+            color: #000;
+            font-weight: 700;
+            padding: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        /* --- Navigation --- */
+        .navbar {
+            background: rgba(22, 96, 156, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--blue-dark);
+            padding: 15px 0;
+            transition: 0.3s;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 600;
+            margin: 0 10px;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--flame-grad);
+            transition: 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* --- Neon Buttons --- */
+        .btn-neon-blue {
+            background: var(--ocean-grad);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(44, 167, 223, 0.5);
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .btn-neon-blue:hover {
+            box-shadow: 0 0 30px rgba(44, 167, 223, 0.8);
+            transform: scale(1.05);
+            color: white;
+        }
+
+        .btn-neon-orange {
+            background: var(--flame-grad);
+            border: none;
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(243, 108, 33, 0.5);
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .btn-neon-orange:hover {
+            box-shadow: 0 0 30px rgba(243, 108, 33, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* --- Hero Section --- */
+        .hero-carousel .carousel-item {
+            height: 85vh;
+            min-height: 500px;
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(11, 15, 25, 1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: var(--ocean-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(44, 167, 223, 0.3);
+        }
+
+        /* --- Cards & Sections --- */
+        .section-padding { padding: 100px 0; }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 50px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            bottom: -15px;
+            left: 0;
+            background: var(--flame-grad);
+            border-radius: 2px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(44, 167, 223, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: 0.4s;
+            height: 100%;
+        }
+        .service-card:hover {
+            border-color: var(--orange-dark);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(243, 108, 33, 0.2);
+        }
+        .service-card i {
+            font-size: 3rem;
+            background: var(--ocean-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        /* --- Parallax --- */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .parallax::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(11, 15, 25, 0.7);
+        }
+
+        /* --- Counter --- */
+        .counter-box h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--flame-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Partners --- */
+        .partner-logo {
+            filter: grayscale(1);
+            opacity: 0.6;
+            transition: 0.3s;
+            max-height: 60px;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #05070a;
+            padding: 80px 0 30px;
+            border-top: 3px solid var(--blue-dark);
+        }
+
+        /* --- SPA View Handling --- */
+        .page-view { display: none; }
+        .page-view.active { display: block; }
+
+        /* --- Product Cards --- */
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .product-card img { height: 250px; object-fit: cover; }
+        .product-badge {
+            background: var(--flame-grad);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: black;
+            font-weight: bold;
+        }
+
+        /* --- Mobile Adjustments --- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .section-padding { padding: 60px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Emergency Bar -->
+    <div class="emergency-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-clock me-2"></i>24/7 EMERGENCY SERVICE IN THE OKANAGAN</span>
+            <a href="tel:7787466423" class="text-dark text-decoration-none">
+                <i class="fas fa-phone-alt me-1"></i> (778) 746-6423
+            </a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <!-- <a class="navbar-brand" href="#" onclick="showPage('index')">
+                <h3 class="mb-0 fw-bold">BREE-<span style="color: var(--orange-dark)">LINK</span></h3>
+            </a> -->
+            <a class="navbar-brand" href="#">
+    <img src="images/logo.png" alt="Logo" style="height: 70px;" width="auto">
+</a>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1)"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('index')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('services')">Our Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('products')">Our Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('testimonials')">Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="#" onclick="showPage('contact')" class="btn-neon-orange btn-sm mt-2 mt-lg-0">BOOK NOW</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-content">
+
+        <!-- HOME PAGE VIEW -->
+        <section id="index" class="page-view active">
+            <!-- Hero Carousel -->
+            <div id="heroSlider" class="carousel slide hero-carousel" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80')">
+                        <div class="hero-overlay">
+                            <div class="container animate__animated animate__fadeInUp">
+                                <h1 class="hero-title">BREE-LINK</h1>
+                                <h3 class="mb-4">Your Premier Okanagan Plumbing & Heating Company</h3>
+                                <div class="mt-4">
+                                    <button class="btn-neon-blue me-3 mb-2" onclick="showPage('contact')">Call Now</button>
+                                    <button class="btn-neon-orange mb-2" onclick="showPage('contact')">Contact Us</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1600&q=80')">
+                        <div class="hero-overlay">
+                            <div class="container">
+                                <h2 class="display-3 fw-bold">Expert Furnace Installation</h2>
+                                <p class="lead">Keeping your home warm throughout the Canadian winter.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1600&q=80')">
+                        <div class="hero-overlay">
+                            <div class="container">
+                                <h2 class="display-3 fw-bold">Professional Repairs</h2>
+                                <p class="lead">Commercial and Residential plumbing experts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Summary Section -->
+            <div class="section-padding container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-5 mb-lg-0 fade-up">
+                        <h2 class="section-title">Family Owned & Operated</h2>
+                        <p class="text- lead">Serving Kelowna, Lake Country, and Vernon with pride. At Bree-Link, we believe in doing it right the first time. We provide 24/7 emergency response for those unexpected moments when you need us most.</p>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Licensed & Insured Professionals</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Fast, Reliable Okanagan Service</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Transparent Upfront Pricing</li>
+                        </ul>
+                        <button class="btn-neon-blue mt-4" onclick="showPage('about')">Read Our Story</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row g-4">
+                            <div class="col-6">
+                                <div class="counter-box service-card text-center fade-up">
+                                    <h2 class="count" data-target="24">0</h2>
+                                    <p>Hour Service</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="counter-box service-card text-center fade-up" style="transition-delay: 0.1s">
+                                    <h2><span class="count" data-target="100">0</span>%</h2>
+                                    <p>Satisfaction</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="counter-box service-card text-center fade-up" style="transition-delay: 0.2s">
+                                    <h2><span class="count" data-target="5000">0</span>+</h2>
+                                    <p>Happy Clients</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Preview -->
+            <div class="section-padding" style="background: #0f172a;">
+                <div class="container text-center mb-5">
+                    <h2 class="section-title">What We Do</h2>
+                </div>
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-md-4 fade-up">
+                            <div class="service-card text-center">
+                                <i class="fas fa-faucet"></i>
+                                <h4>Plumbing Services</h4>
+                                <p class="text-">From leaky faucets to complete pipe replacements, we handle it all.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 fade-up" style="transition-delay: 0.1s">
+                            <div class="service-card text-center">
+                                <i class="fas fa-fire"></i>
+                                <h4>Heating Solutions</h4>
+                                <p class="text-">Stay cozy with our expert furnace maintenance and gas fitting.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 fade-up" style="transition-delay: 0.2s">
+                            <div class="service-card text-center">
+                                <i class="fas fa-tools"></i>
+                                <h4>Emergency Repairs</h4>
+                                <p class="text-">Available 24/7 for burst pipes or heating failures.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Highlight -->
+            <div class="parallax" style="background-image: url('https://images.unsplash.com/photo-1621905252507-b35432594894?auto=format&fit=crop&w=1600&q=80')">
+                <div class="container position-relative text-center">
+                    <h2 class="display-4 fw-bold mb-4">Emergency in Kelowna or Vernon?</h2>
+                    <p class="lead mb-5">Our team is on standby 24/7 to solve your plumbing and heating crises.</p>
+                    <a href="tel:7787466423" class="btn-neon-orange btn-lg">CALL (778) 746-6423 NOW</a>
+                </div>
+            </div>
+
+            <!-- Partners Carousel -->
+            <div class="section-padding container text-center">
+                <h4 class="text- mb-5">WE INSTALL QUALITY BRANDS</h4>
+                <div class="row align-items-center g-5">
+                    <div class="col-4 col-md-2"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/American_Standard_Brands_logo.png" class="partner-logo img-fluid" alt="American Standard"></div>
+                    <div class="col-4 col-md-2"><img src="https://navieninc.com/wp-content/uploads/2021/05/navien-logo.png" class="partner-logo img-fluid" alt="Navien"></div>
+                    <div class="col-4 col-md-2"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Rheem_logo.svg" class="partner-logo img-fluid" alt="Rheem"></div>
+                    <div class="col-4 col-md-2"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/York_International_logo.svg/1280px-York_International_logo.svg.png" class="partner-logo img-fluid" alt="York"></div>
+                    <div class="col-4 col-md-2"><img src="https://www.emco.ca/wp-content/themes/emco-v2/img/emco-logo-black.png" class="partner-logo img-fluid" alt="Emco"></div>
+                    <div class="col-4 col-md-2"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/53/FortisBC_Logo.svg/1200px-FortisBC_Logo.svg.png" class="partner-logo img-fluid" alt="Fortis"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES PAGE VIEW -->
+        <section id="services" class="page-view">
+            <div class="section-padding text-center" style="background: var(--ocean-grad)">
+                <h1 class="display-3 fw-bold">Our Services</h1>
+                <p>Comprehensive solutions for every plumbing and heating need.</p>
+            </div>
+            
+            <div class="container section-padding">
+                <!-- Service Detail 1 -->
+                <div class="row align-items-center mb-5 fade-up">
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1542013936693-884638324252?auto=format&fit=crop&w=800" class="img-fluid rounded-4 shadow" alt="Plumbing">
+                    </div>
+                    <div class="col-lg-6 ps-lg-5">
+                        <h2 class="section-title">Residential Plumbing</h2>
+                        <p class="text-">Complete home plumbing maintenance including drain cleaning, leak detection, fixture replacement, and whole-home repiping. We use the latest technology to minimize disruption to your home.</p>
+                        <button class="btn-neon-orange" onclick="showPage('contact')">Get a Quote</button>
+                    </div>
+                </div>
+
+                <!-- Service Detail 2 -->
+                <div class="row align-items-center mb-5 fade-up">
+                    <div class="col-lg-6 order-lg-2">
+                        <img src="https://images.unsplash.com/photo-1606146485652-75b352ce408a?auto=format&fit=crop&w=800" class="img-fluid rounded-4 shadow" alt="Heating">
+                    </div>
+                    <div class="col-lg-6 pe-lg-5 order-lg-1">
+                        <h2 class="section-title">Heating & Furnace Repair</h2>
+                        <p class="text-">Expert furnace repair and installation. We specialize in high-efficiency systems that reduce your energy bills while keeping your family safe and warm during the freezing Okanagan nights.</p>
+                        <button class="btn-neon-blue" onclick="showPage('contact')">Schedule Repair</button>
+                    </div>
+                </div>
+
+                <!-- Service Detail 3 -->
+                <div class="row align-items-center fade-up">
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1590236162974-82401bb66270?auto=format&fit=crop&w=800" class="img-fluid rounded-4 shadow" alt="Gas Fitting">
+                    </div>
+                    <div class="col-lg-6 ps-lg-5">
+                        <h2 class="section-title">Gas Fitting & Water Heaters</h2>
+                        <p class="text-">Certified gas fitting for ranges, BBQ lines, and heaters. We also install tankless Navien water heaters and standard Rheem tanks to ensure you never run out of hot water.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTS PAGE VIEW -->
+        <section id="products" class="page-view">
+            <div class="section-padding text-center" style="background: var(--flame-grad); color: black;">
+                <h1 class="display-3 fw-bold">Premium Products</h1>
+                <p class="fw-bold">High-efficiency systems for your modern home.</p>
+            </div>
+
+            <div class="container section-padding">
+                <div class="d-flex justify-content-center mb-5 flex-wrap">
+                    <button class="btn btn-outline-light m-2 active" onclick="filterProducts('all')">All</button>
+                    <button class="btn btn-outline-light m-2" onclick="filterProducts('heating')">Heating</button>
+                    <button class="btn btn-outline-light m-2" onclick="filterProducts('water')">Water Systems</button>
+                    <button class="btn btn-outline-light m-2" onclick="filterProducts('hvac')">HVAC</button>
+                </div>
+
+                <div class="row g-4" id="productGrid">
+                    <!-- Products dynamically filtered -->
+                    <div class="col-md-4 product-item heating">
+                        <div class="product-card">
+                            <img src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=500" class="w-100" alt="Furnace">
+                            <div class="p-4">
+                                <span class="product-badge">Heating</span>
+                                <h5 class="mt-2">York Affinity Series Furnace</h5>
+                                <p class="small text-">Quiet, reliable, and high-efficiency performance.</p>
+                                <button class="btn btn-sm btn-neon-blue" onclick="showPage('contact')">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 product-item water">
+                        <div class="product-card">
+                            <img src="https://images.unsplash.com/photo-1621905252507-b35432594894?auto=format&fit=crop&w=500" class="w-100" alt="Water Heater">
+                            <div class="p-4">
+                                <span class="product-badge">Water</span>
+                                <h5 class="mt-2">Navien NPE-A2 Tankless</h5>
+                                <p class="small text-">Unlimited hot water with a compact footprint.</p>
+                                <button class="btn btn-sm btn-neon-blue" onclick="showPage('contact')">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 product-item hvac">
+                        <div class="product-card">
+                            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500" class="w-100" alt="Heat Pump">
+                            <div class="p-4">
+                                <span class="product-badge">HVAC</span>
+                                <h5 class="mt-2">Hybrid Heat Pump System</h5>
+                                <p class="small text-">Eco-friendly cooling and heating for every season.</p>
+                                <button class="btn btn-sm btn-neon-blue" onclick="showPage('contact')">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS PAGE VIEW -->
+        <section id="testimonials" class="page-view">
+            <div class="section-padding text-center">
+                <h2 class="section-title">What Our Clients Say</h2>
+            </div>
+            <div class="container">
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4 fade-up">
+                        <div class="service-card">
+                            <div class="text-warning mb-2"><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i></div>
+                            <p>"Bree-Link saved us in the middle of a cold Vernon winter when our furnace quit. Chris was here within 2 hours!"</p>
+                            <h6 class="mb-0">- Sarah M., Vernon</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-4 fade-up">
+                        <div class="service-card">
+                            <div class="text-warning mb-2"><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i></div>
+                            <p>"Professional, clean, and reasonably priced. The best plumber I've worked with in Kelowna."</p>
+                            <h6 class="mb-0">- James T., Kelowna</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-4 fade-up">
+                        <div class="service-card">
+                            <div class="text-warning mb-2"><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i><i class="fas fa-star fs-6"></i></div>
+                            <p>"The new water heater install was quick and the workspace was cleaner after they left than when they started!"</p>
+                            <h6 class="mb-0">- Robert K., Lake Country</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT PAGE VIEW -->
+        <section id="about" class="page-view">
+            <div class="container section-padding">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-5 mb-lg-0">
+                        <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=800" class="img-fluid rounded-4" alt="Chris Evans">
+                    </div>
+                    <div class="col-lg-7 ps-lg-5">
+                        <h4 class="text-primary">OUR LEADERSHIP</h4>
+                        <h2 class="display-5 fw-bold mb-4">Chris Evans</h2>
+                        <h5 class="text- mb-4">Owner & Operator</h5>
+                        <p class="lead">With years of experience in the Okanagan plumbing and HVAC industry, Chris founded Bree-Link with a single mission: to provide honest, high-quality workmanship to his community.</p>
+                        <p>We aren't just a service company; we're your neighbors. Whether it's a small leak or a major commercial HVAC overhaul, we bring the same level of dedication and precision to every job.</p>
+                        <div class="row mt-4">
+                            <div class="col-6 mb-3">
+                                <h5>Our Mission</h5>
+                                <p class="small text-">To set the standard for plumbing excellence in BC.</p>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <h5>Our Values</h5>
+                                <p class="small text-">Integrity, Speed, and Quality in every pipe and wire.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT PAGE VIEW -->
+        <section id="contact" class="page-view">
+            <div class="container section-padding">
+                <div class="row">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <h2 class="section-title">Get In Touch</h2>
+                        <p class="mb-5">Fill out the form below or call us directly for immediate service. Our team is ready to help 24/7.</p>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="service-card p-3 me-3"><i class="fas fa-phone mb-0"></i></div>
+                            <div>
+                                <h6 class="mb-0">Call Us</h6>
+                                <p class="mb-0 text-">(778) 746-6423</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="service-card p-3 me-3"><i class="fas fa-envelope mb-0"></i></div>
+                            <div>
+                                <h6 class="mb-0">Email Us</h6>
+                                <p class="mb-0 text-">info@bree-link.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="service-card p-3 me-3"><i class="fas fa-map-marker-alt mb-0"></i></div>
+                            <div>
+                                <h6 class="mb-0">Office</h6>
+                                <p class="mb-0 text-">Lake Country, Kelowna, Canada</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="service-card">
+                            <form id="contactForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control bg-dark text-white border-secondary" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control bg-dark text-white border-secondary" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" class="form-control bg-dark text-white border-secondary" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control bg-dark text-white border-secondary" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Message</label>
+                                        <textarea class="form-control bg-dark text-white border-secondary" rows="4" required></textarea>
+                                    </div>
+                                    <div class="col-md-12 mt-4">
+                                        <button type="submit" class="btn-neon-orange w-100">SEND MESSAGE</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="formSuccess" class="alert alert-success mt-3 d-none">
+                                Thank you! Your message has been sent successfully.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Simple Map Frame -->
+            <div class="container-fluid p-0">
+                <div style="width: 100%; height: 400px; background: #222; display: flex; align-items: center; justify-content: center; color: #555;">
+                   <p><i class="fas fa-map-marked-alt fa-3x mb-3"></i><br>Interactive Google Map Placeholder</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h3 class="fw-bold mb-4">BREE-<span style="color: var(--orange-dark)">LINK</span></h3>
+                    <p class="text-">High-quality plumbing and heating solutions for residential and commercial properties throughout the Okanagan.</p>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text- text-decoration-none mb-2 d-block" onclick="showPage('index')">Home</a></li>
+                        <li><a href="#" class="text- text-decoration-none mb-2 d-block" onclick="showPage('services')">Services</a></li>
+                        <li><a href="#" class="text- text-decoration-none mb-2 d-block" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" class="text- text-decoration-none d-block" onclick="showPage('contact')">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text- text-decoration-none mb-2 d-block">Privacy Policy</a></li>
+                        <li><a href="#" class="text- text-decoration-none mb-2 d-block">Terms of Service</a></li>
+                        <li><a href="#" class="text text-decoration-none d-block">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Newsletter</h5>
+                    <p class="small text-">Subscribe for maintenance tips and seasonal discounts.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control border-secondary bg-dark text-white" placeholder="Your Email">
+                        <button class="btn btn-primary">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 border-secondary">
+            <div class="text-center text small">
+                &copy; 2024 Bree-Link Plumbing & Heating. All rights reserved. Designed for Excellence.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- SPA PAGE ROUTING ---
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            // Show requested page
+            const targetPage = document.getElementById(pageId);
+            if(targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+                
+                // Close mobile menu if open
+                const navCollapse = document.getElementById('navbarNav');
+                const bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
+                if (bsCollapse) bsCollapse.hide();
+
+                // Trigger animations for new view
+                handleScrollAnimations();
+            }
+        }
+
+        // --- SCROLL REVEAL ANIMATIONS ---
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-up');
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const isVisible = (rect.top <= (window.innerHeight * 0.8));
+                if (isVisible) el.classList.add('active');
+            });
+        }
+
+        window.addEventListener('scroll', handleScrollAnimations);
+        window.addEventListener('load', () => {
+            handleScrollAnimations();
+            startCounters();
+        });
+
+        // --- ANIMATED COUNTERS ---
+        function startCounters() {
+            const counters = document.querySelectorAll('.count');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const increment = target / 100;
+                
+                const updateCount = () => {
+                    const c = +counter.innerText;
+                    if (c < target) {
+                        counter.innerText = Math.ceil(c + increment);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // --- PRODUCT FILTERING ---
+        function filterProducts(category) {
+            const items = document.querySelectorAll('.product-item');
+            const btns = document.querySelectorAll('.btn-outline-light');
+            
+            btns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if(category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    item.classList.add('animate__animated', 'animate__fadeIn');
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // --- CONTACT FORM HANDLING ---
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.getElementById('formSuccess').classList.remove('d-none');
+            
+            // Simulate server response
+            setTimeout(() => {
+                this.reset();
+                this.style.display = 'block';
+                document.getElementById('formSuccess').classList.add('d-none');
+            }, 5000);
+        });
+
+        // Initialize tooltips/popovers if needed
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+</body>
+</html>
